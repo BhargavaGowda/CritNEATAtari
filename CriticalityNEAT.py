@@ -29,6 +29,7 @@ def main():
     bestFitness = -10000
     bestGenome = None
     fitCurve = np.zeros(gens)
+    popMaxCurve = np.zeros(gens)
     numRolloutsPerEval = 1
 
     for i in range(popSize):
@@ -305,9 +306,8 @@ def main():
                 bestGenomeM1 = m1
 
         #reporter
-        print("avg fitness", np.max(fitnessList) ,"best Fitness:", bestFitness)
-        # for i in range(min(10,popSize)):
-        #     print(i)
+        print("best in current pop:", np.max(fitnessList) ,"best overall:", bestFitness)
+        popMaxCurve[gen] = np.max(fitnessList)
         fitCurve[gen] = bestFitness
         
         if gen%100 == 0 and gen>0:
@@ -331,6 +331,7 @@ def main():
         pickle.dump(pop, f)
 
     plt.plot(fitCurve)
+    plt.plot(popMaxCurve)
     plt.show()
 
 
